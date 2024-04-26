@@ -1,5 +1,13 @@
 # Mini-Scan
 
+# Solution Notes
+I've implemented a new binary `process` which pulls messages from the subscription and pushes them into a channel to fan out to a worker pool to be saved into a persistent store. You can control the number of workers in the pool with the `concurrency` flag, it's defaulted to 10.
+
+It will run alongside the other containers in docker-compose, so to start it you'll just run `docker-compose up`. Every minute it will print out the table contents to stdout so you can see it's actually persisting the messages.
+
+DuckDB runs in memory to provide a mocked up persistence store but the interface is simple to swap out other persistence mechanisms. 
+
+---
 Hello!
 
 As you've heard by now, Censys scans the internet at an incredible scale. Processing the results necessitates scaling horizontally across thousands of machines. One key aspect of our architecture is the use of distributed queues to pass data between machines.
